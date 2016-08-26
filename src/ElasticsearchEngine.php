@@ -141,12 +141,12 @@ class ElasticsearchEngine extends Engine
         if (isset($options['size'])) {
             $params['body']['size'] = $options['size'];
         }
-
-        if (count($options['numericFilters'])) {
-            $params['body']['query']['bool']['must'] = array_merge($params['body']['query']['bool']['must'],
-                $options['numericFilters']);
+        if (isset($options['numericFilters'])) {
+            if (count($options['numericFilters'])) {
+                $params['body']['query']['bool']['must'] = array_merge($params['body']['query']['bool']['must'],
+                    $options['numericFilters']);
+            }
         }
-
         return $this->elastic->search($params);
     }
 
